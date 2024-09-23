@@ -34,9 +34,11 @@ void setup() {
     float temperature = dht.readTemperature();
     float humidity = dht.readHumidity();
     
-    String html = "<html><head><meta charset='utf-8'><meta http-equiv='refresh' content='10' /></head><body><h1>ESP32 DHT11</h1>";
-    html += "<p>Temperatura: " + String(temperature) + " *C</p>";
-    html += "<p>Wilgotność: " + String(humidity) + " %RH</p>";
+      String html = "<html><head><meta charset='utf-8'>";
+    html += "<script>setTimeout(function(){ location.reload(); }, 10000);</script>"; // JavaScript for page refresh every 10 seconds
+    html += "</head><body><h1>ESP32 DHT11</h1>";
+    html += "<p>Temperature: " + String(temperature) + " *C</p>";
+    html += "<p>Humidity: " + String(humidity) + " %RH</p>";
     html += "</body></html>";
     
     request->send(200, "text/html", html);
