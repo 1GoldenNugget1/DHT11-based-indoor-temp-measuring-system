@@ -8,8 +8,8 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 // WiFi credentials
-const char *ssid = "UPC6134271";       // Replace with your network SSID
-const char *password = "vGM7dtunx5sx"; // Replace with your network password
+const char *ssid = " ";       // Replace with your network SSID
+const char *password = " "; // Replace with your network password
 
 AsyncWebServer server(80); // Create AsyncWebServer object on port 80
 
