@@ -62,15 +62,20 @@ void setup() {
   html += "}";
   html += "function updateChart(temperature, humidity) {";
   html += "  const now = new Date().toLocaleTimeString();";
-  html += "  myChart.data.labels.push(now);";
-  html += "  myChart.data.datasets[0].data.push(temperature);";
-  html += "  myChart.data.datasets[1].data.push(humidity);";
-  html += "  if (myChart.data.labels.length > 10) {";
-  html += "    myChart.data.labels.shift();";
-  html += "    myChart.data.datasets[0].data.shift();";
-  html += "    myChart.data.datasets[1].data.shift();";
+  html += "  tempChart.data.labels.push(now);";
+  html += "  humChart.data.labels.push(now);";
+  html += "  tempChart.data.datasets[0].data.push(temperature);";
+  html += "  humChart.data.datasets[0].data.push(humidity);";
+  html += "  if (tempChart.data.labels.length > 10) {";
+  html += "    tempChart.data.labels.shift();";
+  html += "    tempChart.data.datasets[0].data.shift();";
   html += "  }";
-  html += "  myChart.update();";
+  html += "  if (humChart.data.labels.length > 10) {";
+  html += "    humChart.data.labels.shift();";
+  html += "    humChart.data.datasets[0].data.shift();";
+  html += "  }";
+  html += "  tempChart.update();";
+  html += "  humChart.update();";
   html += "}";
   html += "setInterval(fetchData, 10000);"; // Fetch new data every 10 seconds
   html += "</script></head><body onload='fetchData()'><h1>ESP32 DHT11 Sensor</h1>";
@@ -79,13 +84,20 @@ void setup() {
   html += "<div id='temperature'></div><div id='humidity'></div>"; 
   
   // Smaller graph canvas (e.g., width=300, height=150)
-  html += "<canvas id='myChart' width='100' height='20'></canvas>";
+  html += "<canvas id='tempChart' width='100' height='20'></canvas>";
+  html += "<canvas id='humChart' width='100' height='20'></canvas>";
   
   html += "<script>";
-  html += "const ctx = document.getElementById('myChart').getContext('2d');";
-  html += "const myChart = new Chart(ctx, {";
+  html += "const ctx = document.getElementById('tempChart').getContext('2d');";
+  html += "const tempChart = new Chart(ctx, {";
   html += "  type: 'line',";
-  html += "  data: { labels: [], datasets: [{label: 'Temperature (°C)', borderColor: 'red', data: []}, {label: 'Humidity (%RH)', borderColor: 'blue', data: []}] },";
+  html += "  data: { labels: [], datasets: [{label: 'Temperature (°C)', borderColor: 'red', data: []}] },";
+  html += "  options: { scales: { x: { title: { display: true, text: 'Time' } }, y: { title: { display: true, text: 'Value' } } } }";
+  html += "});";
+  html += "const ctx2 = document.getElementById('humChart').getContext('2d');";
+  html += "const humChart = new Chart(ctx2, {";
+  html += "  type: 'line',";
+  html += "  data: { labels: [], datasets: [{label: 'Humidity (%RH)', borderColor: 'blue', data: []}] },";
   html += "  options: { scales: { x: { title: { display: true, text: 'Time' } }, y: { title: { display: true, text: 'Value' } } } }";
   html += "});";
   html += "</script>";
