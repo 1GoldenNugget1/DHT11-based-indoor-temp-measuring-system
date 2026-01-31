@@ -1,6 +1,9 @@
 # DHT11-based-indoor-temp-measuring-system
 code of my indoor temp mesuring system based on DHT11 sensor and ESP32 which is supposed to help me learn cpp more 
 
+# Requirements
+This sketch only works on esp32 platforms tools version 3.0.7 and older!
+
 # License
   * "THE BEER-WARE LICENSE" (Revision 42):
   * [@1GoldenNugget1](https://github.com/1GoldenNugget1) wrote this file.  As long as you retain this notice you
