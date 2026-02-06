@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 
 // Pin configuration for DHT sensor
+#define LED_PIN 2
 #define DHTPIN 4
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
@@ -21,7 +22,9 @@ float currentHumidity = 0.0;
 
 void setup() {
   // Start serial communication for debugging
-  Serial.begin(9600);
+  Serial.begin(115200);
+
+  pinMode(LED_PIN, OUTPUT);
   
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
@@ -111,9 +114,20 @@ void setup() {
 
 void loop() {
   // Reading the DHT sensor data
-  currentHumidity = dht.readHumidity();
-  currentTemperature = dht.readTemperature();
-  
+  float newHumidity = dht.readHumidity();
+  float newTemperature = dht.readTemperature();
+
+  // Check if readings are valid
+  if (!isnan(newHumidity) && !isnan(newTemperature)) {
+    currentHumidity = newHumidity;
+    currentTemperature = newTemperature;
+
+    // Blink LED to indicate sensor update
+    digitalWrite(LED_PIN, HIGH);
+    delay(100);                 // LED on for 100 ms
+    digitalWrite(LED_PIN, LOW);
+  }
+
   // Print sensor data to Serial Monitor for debugging
   Serial.print("Humidity: ");
   Serial.print(currentHumidity);
